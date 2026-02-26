@@ -1,0 +1,62 @@
+### model
+model_name_or_path: Qwen/Qwen2.5-VL-7B-Instruct
+image_max_pixels: 262144
+video_max_pixels: 16384
+trust_remote_code: true
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: false
+freeze_multi_modal_projector: false
+freeze_language_model: false
+deepspeed: examples/deepspeed/ds_z3_offload_config.json
+optim: adamw_torch
+flash_attn: disabled
+
+### dataset
+dataset: ## fill in your dataset name
+template: qwen2_vl
+cutoff_len: 8192
+overwrite_cache: true
+preprocessing_num_workers: 32
+dataloader_num_workers: 12
+
+
+### AVAR Attention Guidance Parameters
+use_avar_attn_guide: true
+avar_attn_alpha: 0.15
+avar_attn_beta: 0.15
+avar_attn_epsilon: 1.0e-6
+
+### output
+output_dir: outputs/Qwen2.5-VL-7B-Instruct/sft/avar_sft_ckpt
+logging_steps: 10
+save_steps: 100
+save_total_limit: 16
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+# report_to: swanlab  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+# use_swanlab: true
+# swanlab_project: llamafactory
+# swanlab_run_name: Qwen2.5-VL-7B-Instruct
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 1.0e-5
+num_train_epochs: 10.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500
+new_special_tokens: <think>,</think>,<answer>,</answer>
+skip_special_tokens: false
+resize_vocab: true
