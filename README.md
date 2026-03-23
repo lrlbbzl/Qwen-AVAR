@@ -47,10 +47,6 @@ Based on these insights, we propose **AVAR** (**A**ttention-guided **V**isual **
 
 Applying AVAR to **Qwen2.5-VL-7B** achieves an average **7.0% gain** across 7 multimodal reasoning benchmarks.
 
-<div align="center">
-  <img src="assets/framework.png" width="90%" alt="AVAR Framework">
-</div>
-
 ---
 
 ## 🏗️ Installation
